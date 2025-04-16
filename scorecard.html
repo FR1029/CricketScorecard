@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorecard</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Scorecard</h1>
+    <button onclick="window.location.href='live.html'">Back to Live Match</button>
+    <h2>Batting Scorecard</h2>
+    <table id="battingScorecard">
+      <thead>
+        <tr>
+          <th>Batter</th>
+          <th>Runs</th>
+          <th>Balls</th>
+          <th>4s</th>
+          <th>6s</th>
+          <th>Strike Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows for batters -->
+      </tbody>
+    </table>
+    <h2>Bowling Scorecard</h2>
+    <table id="bowlingScorecard">
+      <thead>
+        <tr>
+          <th>Bowler</th>
+          <th>Overs</th>
+          <th>Maidens</th>
+          <th>Runs</th>
+          <th>Wickets</th>
+          <th>Economy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows for bowlers -->
+      </tbody>
+    </table>
+  </div>
+  <script src="score.js"></script>
+</body>
+</html>

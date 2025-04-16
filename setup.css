@@ -1,0 +1,33 @@
+.matchSetup{
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 4px black;
+    background-color: hsl(190, 92%, 60%);
+    font-size: 25px;
+}
+#team1, #team2, select {
+    background-color: hsl(132, 67%, 79%);
+    width: 150px;
+    font-size: 20px;
+    text-align: center;
+    height: 25px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 2px black;
+}
+#matchStart{
+    background-color: hsl(232, 78%, 48%);
+    border: none;
+    font-size: 25px;
+    color: hsl(0, 8%, 87%);
+    padding: 1%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+#matchStart:hover{
+    background-color: hsl(232, 78%, 53%);
+    box-shadow: 1px 2px 4px 2px black;
+    color: hsl(0, 8%, 82%);
+}
