@@ -37,6 +37,7 @@ function setupPage(){
             balls1: 0,
             currentBatter: {
             name: '',
+            status: 'not out',
             runs: 0,
             balls: 0,
             fours: 0,
@@ -44,6 +45,7 @@ function setupPage(){
             },
             nonStrikeBatter: {
                 name: '',
+                status: 'not out',
                 runs: 0,
                 balls: 0,
                 fours: 0,
@@ -61,9 +63,19 @@ function setupPage(){
         while(!matchData.currentBatter.name){
             matchData.currentBatter.name = prompt("Enter the striker's name: ");
         }
+        matchData.battingScorecard[matchData.currentBatter.name] = { runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
+        matchData.battingScorecard[matchData.currentBatter.name].runs = matchData.currentBatter.runs;
+        matchData.battingScorecard[matchData.currentBatter.name].balls = matchData.currentBatter.balls;
+        matchData.battingScorecard[matchData.currentBatter.name].fours = matchData.currentBatter.fours;
+        matchData.battingScorecard[matchData.currentBatter.name].sixes = matchData.currentBatter.sixes;
         while(!matchData.nonStrikeBatter.name){
             matchData.nonStrikeBatter.name = prompt("Enter the non-striker's name: ");
         }
+        matchData.battingScorecard[matchData.nonStrikeBatter.name] = { runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
+        matchData.battingScorecard[matchData.nonStrikeBatter.name].runs = matchData.currentBatter.runs;
+        matchData.battingScorecard[matchData.nonStrikeBatter.name].balls = matchData.currentBatter.balls;
+        matchData.battingScorecard[matchData.nonStrikeBatter.name].fours = matchData.currentBatter.fours;
+        matchData.battingScorecard[matchData.nonStrikeBatter.name].sixes = matchData.currentBatter.sixes;
         while(!matchData.currentBowler.name){
             matchData.currentBowler.name = prompt("Enter the first bowler's name: ");
         }
@@ -81,7 +93,7 @@ function livePage() {
             recordRun(matchData, runs);
         });
     });
-        document.getElementById('wicketBtn').addEventListener('click', function() {
+    document.getElementById('wicketBtn').addEventListener('click', function() {
         recordWicket(matchData);
     });
     function recordRun(matchData, runs) {
@@ -93,15 +105,13 @@ function livePage() {
         matchData.currentBowler.runs += runs;
         matchData.balls += 1;
         const batterName = matchData.currentBatter.name;
-        /*
         if (!matchData.battingScorecard[batterName]) {
-            matchData.battingScorecard[batterName] = { runs: 0, balls: 0, fours: 0, sixes: 0 };
+            matchData.battingScorecard[batterName] = { runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
         }
         matchData.battingScorecard[batterName].runs = matchData.currentBatter.runs;
         matchData.battingScorecard[batterName].balls = matchData.currentBatter.balls;
         matchData.battingScorecard[batterName].fours = matchData.currentBatter.fours;
         matchData.battingScorecard[batterName].sixes = matchData.currentBatter.sixes;
-        */
         if (matchData.balls % 6 === 0) {
             matchData.currentBowler.overs += 1;
             matchData.overs += 1;
@@ -109,14 +119,12 @@ function livePage() {
             matchData.currentBatter = matchData.nonStrikeBatter;
             matchData.nonStrikeBatter = temp;
             const bowlerName = matchData.currentBowler.name;
-            /*
             if(!matchData.currentBowler.name){
                 matchData.bowlingScorecard[bowlerName] = { overs: 0, runs: 0, wickets: 0 };
             }
             matchData.bowlingScorecard[bowlerName].overs = matchData.currentBowler.overs;
             matchData.bowlingScorecard[bowlerName].runs = matchData.currentBowler.runs;
             matchData.bowlingScorecard[bowlerName].wickets = matchData.currentBowler.wickets;
-            */
             if(matchData.overs === 1){
                 const newBowler = prompt("Enter new bowler name:");
                 matchData.currentBowler = { name: newBowler, overs: 0, runs: 0, wickets: 0 };
@@ -163,14 +171,20 @@ function livePage() {
         matchData.balls += 1;
         const batterName = matchData.currentBatter.name;
         if (!matchData.battingScorecard[batterName]) {
-            matchData.battingScorecard[batterName] = { runs: 0, balls: 0, fours: 0, sixes: 0 };
+            matchData.battingScorecard[batterName] = { runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
         }
+        matchData.battingScorecard[batterName].status = 'out';
         matchData.battingScorecard[batterName].runs = matchData.currentBatter.runs;
         matchData.battingScorecard[batterName].balls = matchData.currentBatter.balls;
         matchData.battingScorecard[batterName].fours = matchData.currentBatter.fours;
         matchData.battingScorecard[batterName].sixes = matchData.currentBatter.sixes;
         const newBatterName = prompt("Wicket! Enter new batter name:");
         matchData.currentBatter = { name: newBatterName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+        matchData.battingScorecard[matchData.currentBatter.name] = { runs: 0, balls: 0, fours: 0, sixes: 0 };
+        matchData.battingScorecard[matchData.currentBatter.name].runs = matchData.currentBatter.runs;
+        matchData.battingScorecard[matchData.currentBatter.name].balls = matchData.currentBatter.balls;
+        matchData.battingScorecard[matchData.currentBatter.name].fours = matchData.currentBatter.fours;
+        matchData.battingScorecard[matchData.currentBatter.name].sixes = matchData.currentBatter.sixes;
         localStorage.setItem('matchData', JSON.stringify(matchData));
         updateLive(matchData);
     }
@@ -201,4 +215,22 @@ function livePage() {
         document.getElementById('bowlerMaidens').innerText = 0;
         document.getElementById('bowlerEconomy').innerText = matchData.currentBowler.overs ? (matchData.currentBowler.runs / matchData.currentBowler.overs).toFixed(2) : 0;
     }
+}
+function scorecardPage() {
+    const matchData = JSON.parse(localStorage.getItem('matchData'));
+    const battingBody = document.querySelector('#battingScorecard tbody');
+    battingBody.innerHTML = '';
+    Object.entries(matchData.battingScorecard).forEach(([name, stats]) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${stats.status}<td>
+            <td>${stats.runs}</td>
+            <td>${stats.balls}</td>
+            <td>${stats.fours}</td>
+            <td>${stats.sixes}</td>
+            <td>${stats.balls ? ((stats.runs / stats.balls) * 100).toFixed(2) : '0.00'}</td>
+        `;
+        battingBody.appendChild(row);
+    });
 }
