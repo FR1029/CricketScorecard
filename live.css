@@ -9,7 +9,7 @@
     font-size: 25px;
     align-content: center;
 }
-#overallScore{
+.score{
     background-color: hsl(146, 94%, 45%);
     font-size: 30px;
     align-self: center;
