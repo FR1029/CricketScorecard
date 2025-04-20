@@ -1,33 +1,63 @@
-.matchSetup{
-    margin: 50px auto;
-    max-width: 600px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 4px black;
-    background-color: hsl(190, 92%, 60%);
-    font-size: 25px;
+*{
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
-#team1, #team2, select {
-    background-color: hsl(132, 67%, 79%);
-    width: 150px;
-    font-size: 20px;
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Klavika, Helvetica, sans-serif;
+    background-color: hsl(146, 79%, 69%);
+    font-size: 1.2rem;
+}
+.matchSetup{
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px 30px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, hsl(190, 92%, 60%), hsl(146, 79%, 69%));
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    text-align: left;
+    font-size: 1.4rem;
+}
+#heading{
     text-align: center;
-    height: 25px;
-    border: none;
+    color: hsl(0, 88%, 53%);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    animation: pulse 3s infinite ease-in-out;
+}
+label{
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+input[type="text"], select{
+    width: 100%;
+    padding: 10px;
+    font-size: 1.4rem;
     border-radius: 10px;
-    box-shadow: 1px 1px 2px black;
+    border: 1px solid hsl(238, 81%, 55%);
+    background-color: lightgrey;
+    margin-bottom: 20px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
 }
 #matchStart{
-    background-color: hsl(232, 78%, 48%);
+    padding: 10px 25px;
+    font-size: 2rem;
+    background: linear-gradient(135deg, hsl(10, 80%, 65%), hsl(240, 60%, 20%));
+    color: hsl(190, 92%, 60%);
     border: none;
-    font-size: 25px;
-    color: hsl(0, 8%, 87%);
-    padding: 1%;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px 1px black;
+    cursor: pointer;
+    box-shadow: 1px 2px 4px black;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 #matchStart:hover{
-    background-color: hsl(232, 78%, 53%);
-    box-shadow: 1px 2px 4px 2px black;
-    color: hsl(0, 8%, 82%);
+    background: linear-gradient(135deg, hsl(240, 60%, 20%), hsl(10, 80%, 65%));
+    color: hsl(190, 100%, 70%);
+    transform: scale(1.05);
+}
+@keyframes pulse{
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }

@@ -219,7 +219,7 @@ function livePage() {
                                                      status: 'not out',
                                                      fours: matchData.currentBatter.fours,
                                                      sixes: matchData.currentBatter.sixes }
-            if(matchData.balls % 6 == 0){
+            if(matchData.balls % 6 == 0 && matchData.balls > 0){
                 matchData.bowlers++;
                 matchData.overs += 1;
                 let tmp = matchData.striker;
@@ -369,7 +369,7 @@ function scorecardPage() {
     const battingBody1 = document.querySelector('#battingScorecard1 tbody');
     if(matchData.innings === 2){
         document.querySelectorAll('.inning2').forEach(el => {
-            el.style.visibility = 'visible';
+            el.style.display = 'table';
         });
     }
     battingBody1.innerHTML = '';
@@ -378,7 +378,7 @@ function scorecardPage() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${stats.name}</td>
-            <td>${stats.status}<td>
+            <td>${stats.status}</td>
             <td>${stats.runs}</td>
             <td>${stats.balls}</td>
             <td>${stats.fours}</td>
@@ -400,10 +400,10 @@ function scorecardPage() {
         }
         row.innerHTML = `
             <td>${stats.name}</td>
-            <td>${overs}
+            <td>${overs}</td>
             <td>${stats.balls === 6 ? (stats.runs ? 0 : 1) : 0}</td>
             <td>${stats.runs}</td>
-            <td>${stats.wickets}</td
+            <td>${stats.wickets}</td>
             <td>${economy}</td>
         `;
         bowlingBody1.appendChild(row);
@@ -415,7 +415,7 @@ function scorecardPage() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${stats.name}</td>
-            <td>${stats.status}<td>
+            <td>${stats.status}</td>
             <td>${stats.runs}</td>
             <td>${stats.balls}</td>
             <td>${stats.fours}</td>
@@ -437,10 +437,10 @@ function scorecardPage() {
         }
         row.innerHTML = `
             <td>${stats.name}</td>
-            <td>${overs}
+            <td>${overs}</td>
             <td>${stats.balls === 6 ? (stats.runs ? 0 : 1) : 0}</td>
             <td>${stats.runs}</td>
-            <td>${stats.wickets}</td
+            <td>${stats.wickets}</td>
             <td>${economy}</td>
         `;
         bowlingBody2.appendChild(row);
@@ -454,4 +454,30 @@ function summaryPage(){
     else if(matchData.score1 < matchData.score){
         document.getElementById('matchResult').innerText = `${matchData.team2} wins by ${10-matchData.wickets} wickets (${12-matchData.balls} balls left)`;
     }
+    document.getElementById('resetMatchBtn').onclick = function() {
+        window.location.href = 'setup.html';
+        localStorage.clear();
+        resetUI();
+    };
+}
+function resetUI(){
+    document.getElementById('overallScore').innerText = '';
+    document.getElementById('runRate').innerText = '';
+    document.getElementById('strikeName').innerText = matchData.currentBatter.name;
+       /* document.getElementById('strikeRuns').innerText = matchData.currentBatter.runs;
+        document.getElementById('strikeBalls').innerText = matchData.currentBatter.balls;
+        document.getElementById('strikeFours').innerText = matchData.currentBatter.fours;
+        document.getElementById('strikeSixes').innerText = matchData.currentBatter.sixes;
+        document.getElementById('strikeSR').innerText = matchData.currentBatter.balls ? ((matchData.currentBatter.runs / matchData.currentBatter.balls) * 100).toFixed(2) : 0;
+        document.getElementById('nonStrikeName').innerText = matchData.nonStrikeBatter.name;*/
+    document.getElementById('nonStrikeRuns').innerText = '';
+    document.getElementById('nonStrikeBalls').innerText = '';
+    document.getElementById('nonStrikeFours').innerText = '';
+    document.getElementById('nonStrikeSixes').innerText = '';
+    document.getElementById('nonStrikeSR').innerText = '';
+    document.getElementById('bowlerOvers').innerText = '';
+    document.getElementById('bowlerRuns').innerText = '';
+    document.getElementById('bowlerWickets').innerText = '';
+    document.getElementById('bowlerMaidens').innerText = '';
+    document.getElementById('bowlerEconomy').innerText = '';
 }
