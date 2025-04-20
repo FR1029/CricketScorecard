@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="live.css">
 </head>
 <body>
+    <h1 id="heading">Live Match</h1>
     <div class="container">
         <div id="scoreDisplay">
             <h1 class="score" id="overallScore">Score: </h1>
             <h2 class="score" id="runRate" style="font-size: 20px;"></h2>
         </div>
-        <div id="batterTable">
-            <table border="1">
+        <div id="batterContainer">
+            <table class="scoreTable" id="batterTable" style="border-collapse: collapse;">
                 <thead>
-                    <tr style="color: hsl(289, 72%, 52%);">
+                    <tr style="color: #6272a4;">
                         <th style="width: 250px;">Batsman</th>
                         <th>R</th>
                         <th>B</th>
@@ -44,10 +45,10 @@
                 </tbody>
             </table>
         </div>
-        <div id="bowlerTable">
-            <table border="1">
+        <div id="bowlerContainer">
+            <table class="scoreTable" id="bowlerTable" style="border-collapse: collapse;">
                 <thead>
-                    <tr style="color: hsl(289, 72%, 52%);">
+                    <tr style="color: #6272a4;">
                         <th style="width: 250px;">Bowler</th>
                         <th>O</th>
                         <th>M</th>
@@ -76,10 +77,10 @@
             <button class="runBtn" data-run="4">4</button>
             <button class="runBtn" data-run="6">6</button>
             <button id="wicketBtn">Wicket</button>
-            </div>
-                <div id="navigation">
-                <button onclick="window.location.href='scorecard.html'">Go to Scorecard</button>
-            </div>
+        </div>
+    </div>
+    <div id="navigation" style="text-align: center;">
+        <button id="scorecardBtn" onclick="window.location.href='scorecard.html'">Go to Scorecard</button>
     </div>
     <script src="score.js"></script>
 </body>
