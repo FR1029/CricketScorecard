@@ -338,7 +338,7 @@ function livePage() {
         }
         else{
             let NRR = (((matchData.score1+1-matchData.score)*6)/(12-matchData.balls)).toFixed(2);
-            if(NRR <= 0){
+            if(NRR <= 0 || (matchData.innings === 2 && matchData.overs === 2)){
                 window.location.href = 'summary.html';
             }
             document.getElementById('overallScore').innerText = `${matchData.battingTeam} ${matchData.score}/${matchData.wickets} (${matchData.overs}.${matchData.balls % 6}) vs. ${matchData.bowlingTeam} ${matchData.score1}/${matchData.wickets1}`;
@@ -449,7 +449,7 @@ function scorecardPage() {
 function summaryPage(){
     const matchData = JSON.parse(localStorage.getItem('matchData'));
     if(matchData.score1 > matchData.score){
-        document.getElementById('matchResult').innerText = `${matchData.team1} wins by ${matchData.score-matchData.score1} runs!`;
+        document.getElementById('matchResult').innerText = `${matchData.team1} wins by ${matchData.score1-matchData.score} runs!`;
     }
     else if(matchData.score1 < matchData.score){
         document.getElementById('matchResult').innerText = `${matchData.team2} wins by ${10-matchData.wickets} wickets (${12-matchData.balls} balls left)`;
@@ -463,13 +463,13 @@ function summaryPage(){
 function resetUI(){
     document.getElementById('overallScore').innerText = '';
     document.getElementById('runRate').innerText = '';
-    document.getElementById('strikeName').innerText = matchData.currentBatter.name;
-       /* document.getElementById('strikeRuns').innerText = matchData.currentBatter.runs;
-        document.getElementById('strikeBalls').innerText = matchData.currentBatter.balls;
-        document.getElementById('strikeFours').innerText = matchData.currentBatter.fours;
-        document.getElementById('strikeSixes').innerText = matchData.currentBatter.sixes;
-        document.getElementById('strikeSR').innerText = matchData.currentBatter.balls ? ((matchData.currentBatter.runs / matchData.currentBatter.balls) * 100).toFixed(2) : 0;
-        document.getElementById('nonStrikeName').innerText = matchData.nonStrikeBatter.name;*/
+    document.getElementById('strikeName').innerText = '';
+    document.getElementById('strikeRuns').innerText = '';
+    document.getElementById('strikeBalls').innerText = '';
+    document.getElementById('strikeFours').innerText = '';
+    document.getElementById('strikeSixes').innerText = '';
+    document.getElementById('strikeSR').innerText = '';
+    document.getElementById('nonStrikeName').innerText = '';
     document.getElementById('nonStrikeRuns').innerText = '';
     document.getElementById('nonStrikeBalls').innerText = '';
     document.getElementById('nonStrikeFours').innerText = '';

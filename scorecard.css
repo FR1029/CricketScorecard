@@ -8,9 +8,16 @@ body{
     font-size: 1.2rem;
     background-color: hsl(146, 79%, 69%);
 }
+#liveBtn{
+    max-width: 1000px;
+    margin: 0px 0px 40px 40px;
+    padding: 10px 20px;
+    text-align: center;
+}
 .container{
     max-width: 1000px;
     margin: 40px auto;
+    margin-top: 0px;
     padding: 30px 20px;
     border-radius: 20px;
     background: linear-gradient(145deg, hsl(190, 92%, 60%), hsl(146, 79%, 69%));
@@ -18,18 +25,11 @@ body{
     text-align: center;
     font-size: 1.5rem;
 }
-#heading{
-    font-size: 3rem;
-    color: hsl(0, 88%, 53%);
-    margin-bottom: 20px;
-    margin-top: 0px;
-    animation: pulse 3s infinite ease-in-out;
-}
 #teamName1, #teamName2{
     font-size: 2rem;
     color: #3f2fc9;
     text-align: left;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-bottom: 10px;
 }
 table{
@@ -65,8 +65,4 @@ button:hover{
     background: linear-gradient(135deg, hsl(240, 60%, 20%), hsl(10, 80%, 65%));
     color: hsl(190, 100%, 70%);
     transform: scale(1.05);
-}
-@keyframes pulse{
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
 }

@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+body{
+    background-color: hsl(146, 79%, 69%);
+    margin: 0;
+    font-family: Klavika, Helvetica, sans-serif;
+    font-size: 1.2rem;
+}

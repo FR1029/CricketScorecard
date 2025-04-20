@@ -7,71 +7,72 @@
     <link rel="stylesheet" href="scorecard.css">
 </head>
 <body>
-  <div class="container">
-    <h1 id="heading">Scorecard</h1>
-    <h2 id="teamName1"></h2>
-    <table id="battingScorecard1">
-        <thead>
-            <tr>
-            <th>Batting</th>
-            <th>Status</th>
-            <th>R</th>
-            <th>B</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>SR</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <table id="bowlingScorecard1">
-        <thead>
-            <tr>
-            <th>Bowler</th>
-            <th>Overs</th>
-            <th>Maidens</th>
-            <th>Runs</th>
-            <th>Wickets</th>
-            <th>Economy</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Dynamic rows for bowlers -->
-        </tbody>
-    </table>
-    <h2 class="inning2" id="teamName2" style="display: none;"></h2>
-    <table class="inning2" id="battingScorecard2" style="display: none;">
-        <thead>
-            <tr>
-            <th>Batting</th>
-            <th>Status</th>
-            <th>Runs</th>
-            <th>Balls</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>Strike Rate</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <table class="inning2" id="bowlingScorecard2" style="display: none;">
-        <thead>
-            <tr>
-            <th>Bowler</th>
-            <th>Overs</th>
-            <th>Maidens</th>
-            <th>Runs</th>
-            <th>Wickets</th>
-            <th>Economy</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <button onclick="window.location.href='live.html'">Back to Live Match</button>
-  </div>
-  <script src="score.js"></script>
+    <div id="liveBtn">
+        <button onclick="window.location.href='live.html'">Back to Live Match</button>
+    </div>
+    <div class="container">
+        <h2 id="teamName1"></h2>
+        <table id="battingScorecard1">
+            <thead>
+                <tr>
+                <th>Batting</th>
+                <th>Status</th>
+                <th>R</th>
+                <th>B</th>
+                <th>4s</th>
+                <th>6s</th>
+                <th>SR</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <table id="bowlingScorecard1">
+            <thead>
+                <tr>
+                <th>Bowler</th>
+                <th>Overs</th>
+                <th>Maidens</th>
+                <th>Runs</th>
+                <th>Wickets</th>
+                <th>Economy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows for bowlers -->
+            </tbody>
+        </table>
+        <h2 class="inning2" id="teamName2" style="display: none;"></h2>
+        <table class="inning2" id="battingScorecard2" style="display: none;">
+            <thead>
+                <tr>
+                <th>Batting</th>
+                <th>Status</th>
+                <th>Runs</th>
+                <th>Balls</th>
+                <th>4s</th>
+                <th>6s</th>
+                <th>Strike Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <table class="inning2" id="bowlingScorecard2" style="display: none;">
+            <thead>
+                <tr>
+                <th>Bowler</th>
+                <th>Overs</th>
+                <th>Maidens</th>
+                <th>Runs</th>
+                <th>Wickets</th>
+                <th>Economy</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script src="score.js"></script>
 </body>
 </html>
