@@ -27,12 +27,12 @@
                 </thead>
                 <tbody>
                     <tr id="strikeBatter">
-                        <td class="striker" id="strikeName"></td>
-                        <td class="striker" id="strikeRuns">0</td>
-                        <td class="striker" id="strikeBalls">0</td>
-                        <td class="striker" id="strikeFours">0</td>
-                        <td class="striker" id="strikeSixes">0</td>
-                        <td class="striker" id="strikeSR">0</td>
+                        <td id="strikeName"></td>
+                        <td id="strikeRuns">0</td>
+                        <td id="strikeBalls">0</td>
+                        <td id="strikeFours">0</td>
+                        <td id="strikeSixes">0</td>
+                        <td id="strikeSR">0</td>
                     </tr>
                     <tr id="nonStrikeBatter">
                         <td id="nonStrikeName"></td>
@@ -54,17 +54,21 @@
                         <th>M</th>
                         <th>R</th>
                         <th>W</th>
-                        <th>Econ</th>
+                        <th>ECON</th>
+                        <th>WD</th>
+                        <th>NB</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="bowler">
-                        <td class="striker" id="bowlerName"></td>
-                        <td class="striker" id="bowlerOvers"></td>
-                        <td class="striker" id="bowlerMaidens"></td>
-                        <td class="striker" id="bowlerRuns"></td>
-                        <td class="striker" id="bowlerWickets"></td>
-                        <td class="striker" id="bowlerEconomy"></td>
+                        <td id="bowlerName"></td>
+                        <td id="bowlerOvers"></td>
+                        <td id="bowlerMaidens"></td>
+                        <td id="bowlerRuns"></td>
+                        <td id="bowlerWickets"></td>
+                        <td id="bowlerEconomy"></td>
+                        <td id="bowlerWide"></td>
+                        <td id="bowlerNoBall"></td>
                     </tr>
                 </tbody>
             </table>
@@ -77,6 +81,7 @@
             <button class="runBtn" data-run="4">4</button>
             <button class="runBtn" data-run="6">6</button>
             <button id="wicketBtn">Wicket</button>
+            <button id="wideBtn">Wide</button>
         </div>
         <div id="navigation" style="text-align: center;">
             <button id="scorecardBtn" onclick="window.location.href='scorecard.html'">Go to Scorecard</button>

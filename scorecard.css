@@ -33,6 +33,7 @@ body{
     margin-bottom: 10px;
 }
 table{
+    table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 30px;
@@ -42,8 +43,9 @@ th, td{
     padding: 12px;
     border: 1px solid hsl(238, 81%, 55%);
     text-align: center;
+    word-wrap: break-word;
 }
-thead{
+thead, tfoot{
     background-color: rgba(98, 114, 164, 0.15);
     color: #6272a4;
     font-weight: bold;

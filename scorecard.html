@@ -15,27 +15,40 @@
         <table id="battingScorecard1">
             <thead>
                 <tr>
-                <th>Batting</th>
-                <th>Status</th>
-                <th>R</th>
-                <th>B</th>
-                <th>4s</th>
-                <th>6s</th>
-                <th>SR</th>
+                    <th style="width: 250px;">Batting</th>
+                    <th>Status</th>
+                    <th style="width: 90px;">R</th>
+                    <th style="width: 90px;">B</th>
+                    <th style="width: 70px;">4s</th>
+                    <th style="width: 70px;">6s</th>
+                    <th style="width: 175px;">SR</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>Extras</td>
+                    <td class="extras"></td>
+                    <td class="extraRuns"></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="score"></td>
+                </tr>
+            </tfoot>
         </table>
         <table id="bowlingScorecard1">
             <thead>
                 <tr>
-                <th>Bowler</th>
-                <th>Overs</th>
-                <th>Maidens</th>
-                <th>Runs</th>
-                <th>Wickets</th>
-                <th>Economy</th>
+                    <th style="width: 250px;">Bowler</th>
+                    <th>O</th>
+                    <th>M</th>
+                    <th>R</th>
+                    <th>W</th>
+                    <th>ECON</th>
+                    <th>WD</th>
+                    <th>NB</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,31 +59,49 @@
         <table class="inning2" id="battingScorecard2" style="display: none;">
             <thead>
                 <tr>
-                <th>Batting</th>
-                <th>Status</th>
-                <th>Runs</th>
-                <th>Balls</th>
-                <th>4s</th>
-                <th>6s</th>
-                <th>Strike Rate</th>
+                    <th style="width: 250px;">Batting</th>
+                    <th>Status</th>
+                    <th style="width: 90px;">R</th>
+                    <th style="width: 90px;">B</th>
+                    <th style="width: 70px;">4s</th>
+                    <th style="width: 70px;">6s</th>
+                    <th style="width: 175px;">SR</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>Extras</td>
+                    <td class="extras"></td>
+                    <td class="extraRuns"></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="score"></td>
+                </tr>
+            </tfoot>
         </table>
         <table class="inning2" id="bowlingScorecard2" style="display: none;">
             <thead>
                 <tr>
-                <th>Bowler</th>
-                <th>Overs</th>
-                <th>Maidens</th>
-                <th>Runs</th>
-                <th>Wickets</th>
-                <th>Economy</th>
+                    <th style="width: 250px;">Bowler</th>
+                    <th>O</th>
+                    <th>M</th>
+                    <th>R</th>
+                    <th>W</th>
+                    <th>ECON</th>
+                    <th>WD</th>
+                    <th>NB</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>(<p id="bye"></p>)</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <script src="score.js"></script>
