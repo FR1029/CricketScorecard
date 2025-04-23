@@ -26,6 +26,8 @@ function setupPage(){
             overs: 0,
             innings: 1,
             extras: 0,
+            wides: 0,
+            noBalls: 0,
             // Current team scores and wickets
             score: 0,
             wickets: 0,
@@ -36,7 +38,9 @@ function setupPage(){
             score1: 0,
             wickets1: 0,
             balls1: 0,
-            extras: 0,
+            extras1: 0,
+            wides1: 0,
+            noBalls1: 0,
             // Current player's stats and name
             currentBatter: {
                 name: '',
@@ -72,35 +76,39 @@ function setupPage(){
         while (!matchData.currentBatter.name) matchData.currentBatter.name = prompt("Enter the striker's name: ");
         while (!matchData.nonStrikeBatter.name) matchData.nonStrikeBatter.name = prompt("Enter the non-striker's name: ");
         while (!matchData.currentBowler.name) matchData.currentBowler.name = prompt("Enter the first bowler's name: ");
-        // Update the scorecard
-        matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
-        matchData.battingScorecard1[matchData.nonstriker] = { name: matchData.nonStrikeBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
-        matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: 0, runs: 0, wickets: 0 };
-        // Store the matchData
-        localStorage.setItem('matchData', JSON.stringify(matchData));
-        // Start the match
-        window.location.href = 'live.html';
+        localStorage.setItem('matchData', JSON.stringify(matchData));// Store the matchData in local storage
+        window.location.href = 'live.html';// Start the match
     });
 }
 function livePage(){
-    let matchData = JSON.parse(localStorage.getItem('matchData'));// Load the saved matchData from browser storage for live scoring
-    updateLive(matchData);// Updating the live match
+    let matchData = JSON.parse(localStorage.getItem('matchData'));// Load the saved matchData from local storage
+    updateLive(matchData);// Live match update
     const runButtons = document.querySelectorAll('.runBtn');
-    // Record Runs
     runButtons.forEach(button => {
         button.addEventListener('click', function() {
             let runs = parseInt(this.getAttribute('data-run'));
-            recordRun(matchData, runs);
+            recordRun(matchData, runs);// Record Runs
+            updateLive(matchData);// Live match update
         });
     });
-    // Record wickets
     document.getElementById('wicketBtn').addEventListener('click', function() {
-        recordWicket(matchData);
+        recordWicket(matchData);// Record wickets
+        updateLive(matchData);// Live match update
     });
     document.getElementById('wideBtn').addEventListener('click', function() {
-        recordWide(matchData);
+        recordWide(matchData);// Record wide
+        updateLive(matchData);// Live match update
+    });
+    document.getElementById('noBallBtn').addEventListener('click', function(){
+        recordNoBall(matchData);// Record no ball
+        updateLive(matchData);// Live match update
+    });
+    document.getElementById('scorecardBtn').addEventListener('click', function(){
+        updateLive(matchData);// Live match update
+        window.location.href = 'scorecard.html';
     });
     if (matchData.balls === 12 && matchData.innings === 2) {
+        updateLive(matchData);// Live match update
         window.location.href = 'summary.html';
         return;
     }
@@ -114,19 +122,12 @@ function livePage(){
         if (runs === 6) matchData.currentBatter.sixes++;
         matchData.currentBowler.balls++;
         matchData.currentBowler.runs += runs;
-        // Scorecard update
-        matchData.innings === 1 ? 
-            (matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
-            matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'not out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes})
-            : (matchData.bowlingScorecard2[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
-            matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'not out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes});
         checkOver(matchData);// If over is completed then over completion logic run
         if (runs % 2 === 1) {
             [matchData.striker, matchData.nonstriker] = [matchData.nonstriker, matchData.striker];
             [matchData.currentBatter, matchData.nonStrikeBatter] = [matchData.nonStrikeBatter, matchData.currentBatter];
         }
         localStorage.setItem('matchData', JSON.stringify(matchData));// Match data is updated
-        updateLive(matchData);// Live match update
     }
     // Record wickets
     function recordWicket(matchData) {
@@ -137,10 +138,10 @@ function livePage(){
         matchData.balls++;
         // Scorecard update
         matchData.innings === 1 ? 
-            (matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
-            matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes})
-            : (matchData.bowlingScorecard2[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
-            matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes});
+            (matchData.bowlingScorecard1[matchData.overs].balls++,matchData.bowlingScorecard1[matchData.overs].wickets++,
+            matchData.battingScorecard1[matchData.striker].balls++, matchData.battingScorecard1[matchData.striker].status = 'out')
+            : (matchData.bowlingScorecard2[matchData.overs].balls++,matchData.bowlingScorecard2[matchData.overs].wickets++,
+            matchData.battingScorecard2[matchData.striker].balls++, matchData.battingScorecard2[matchData.striker].status = 'out');
         // New batter logic
         let newBatterName = '';
         while(!newBatterName) newBatterName = prompt("Wicket! Enter new batter name:")
@@ -151,7 +152,6 @@ function livePage(){
             : matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
         checkOver(matchData);// If over is completed then over completion logic run
         localStorage.setItem('matchData', JSON.stringify(matchData)); // Match data updated
-        updateLive(matchData); // Live match update
     }
     function checkOver(matchData){
         if(matchData.balls === 12 && matchData.innings === 2) {
@@ -167,9 +167,6 @@ function livePage(){
                 let newBowler = '';
                 while(!newBowler) newBowler = prompt("Enter new bowler name:");
                 matchData.currentBowler = { name: newBowler, balls: 0, runs: 0, wickets: 0 };
-                matchData.innings === 1 ?
-                    matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: 0, runs: 0, wickets: 0 }
-                    : matchData.bowlingScorecard2[matchData.overs] = {name: matchData.currentBowler.name, balls: 0, runs: 0, wickets: 0}
             }
             if (matchData.overs === 2 && matchData.innings === 1){
                 matchData.innings++;
@@ -177,6 +174,9 @@ function livePage(){
                 matchData.balls1 = matchData.balls;
                 matchData.score1 = matchData.score;
                 matchData.wickets1 = matchData.wickets;
+                matchData.extras1 = matchData.extras;
+                matchData.wides1 = matchData.wides;
+                matchData.noBalls1 = matchData.noBalls;
                 // Reset current inning data
                 matchData.score = 0;
                 matchData.balls = 0;
@@ -184,6 +184,9 @@ function livePage(){
                 matchData.wickets = 0;
                 matchData.striker = 0;
                 matchData.nonstriker = 1;
+                matchData.extras = 0;
+                matchData.wides = 0;
+                matchData.noBalls = 0;
                 // Change Batting and Bowling team
                 [matchData.battingTeam, matchData.bowlingTeam] = [matchData.bowlingTeam, matchData.battingTeam];
                 // Take new data for next inning
@@ -193,14 +196,12 @@ function livePage(){
                 while(!matchData.currentBatter.name) matchData.currentBatter.name = prompt("Second Innings: Enter new striker's name:");
                 while(!matchData.nonStrikeBatter.name) matchData.nonStrikeBatter.name = prompt("Second Innings: Enter non-striker's name:");
                 while(!matchData.currentBowler.name) matchData.currentBowler.name = prompt("Second Innings: Enter bowler name:");
-                matchData.battingScorecard2[matchData.striker] = {name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0};
-                matchData.battingScorecard2[matchData.nonstriker] = {name: matchData.nonStrikeBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0};
-                matchData.bowlingScorecard2[matchData.overs] = {name: matchData.currentBowler.name, runs: 0, balls: 0, wickets: 0};
             }
         }
     }
     function recordWide(matchData){
         matchData.extras++;
+        matchData.wides++;
         matchData.score++;
         matchData.currentBowler.runs++;
         matchData.innings === 1 ?
@@ -208,7 +209,27 @@ function livePage(){
         localStorage.setItem('matchData', JSON.stringify(matchData)); // Match data updated
         updateLive(matchData); // Live match update
     }
+    function recordNoBall(matchData){
+        runButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                let runs = parseInt(this.getAttribute('data-run'));
+                matchData.runs += runs+1;
+                matchData.currentBatter.runs += runs;
+                matchData.currentBowler.runs += runs+1;
+                matchData.noBalls++;
+                matchData.extras++;
+            });
+        });
+    }
     function updateLive(matchData) {
+        // Scorecard update
+        matchData.innings === 1 ? 
+        (matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
+        matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'not out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes},
+        matchData.battingScorecard1[matchData.nonstriker] = {name: matchData.nonStrikeBatter.name, runs: matchData.nonStrikeBatter.runs, balls: matchData.nonStrikeBatter.balls, status: 'not out', fours: matchData.nonStrikeBatter.fours, sixes: matchData.nonStrikeBatter.sixes})
+        : (matchData.bowlingScorecard2[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets},
+        matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: matchData.currentBatter.runs, balls: matchData.currentBatter.balls, status: 'not out', fours: matchData.currentBatter.fours, sixes: matchData.currentBatter.sixes},
+        matchData.battingScorecard2[matchData.nonstriker] = {name: matchData.nonStrikeBatter.name, runs: matchData.nonStrikeBatter.runs, balls: matchData.nonStrikeBatter.balls, status: 'not out', fours: matchData.nonStrikeBatter.fours, sixes: matchData.nonStrikeBatter.sixes});
         let CRR = matchData.balls ? ((matchData.score*6)/matchData.balls).toFixed(2) : "0.00";
         if(matchData.innings == 1){
             document.getElementById('overallScore').innerText = `${matchData.battingTeam} ${matchData.score}/${matchData.wickets} (${matchData.overs}.${matchData.balls % 6}) vs. ${matchData.bowlingTeam}`;
@@ -335,12 +356,8 @@ function scorecardPage() {
 }
 function summaryPage(){
     const matchData = JSON.parse(localStorage.getItem('matchData'));
-    if(matchData.score1 > matchData.score){
-        document.getElementById('matchResult').innerText = `${matchData.team1} wins by ${matchData.score1-matchData.score} runs!`;
-    }
-    else if(matchData.score1 < matchData.score){
-        document.getElementById('matchResult').innerText = `${matchData.team2} wins by ${10-matchData.wickets} wickets (${12-matchData.balls} balls left)`;
-    }
+    if(matchData.score1 > matchData.score) document.getElementById('matchResult').innerText = `${matchData.team1} wins by ${matchData.score1-matchData.score} runs!`;
+    else if(matchData.score1 < matchData.score) document.getElementById('matchResult').innerText = `${matchData.team2} wins by ${10-matchData.wickets} wickets (${12-matchData.balls} balls left)`;
     document.getElementById('resetMatchBtn').onclick = function() {
         window.location.href = 'setup.html';
         localStorage.clear();

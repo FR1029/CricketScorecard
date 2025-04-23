@@ -68,10 +68,6 @@ body{
 #batterContainer, #bowlerContainer{
     padding: 20px 0;
 }
-@keyframes pulse{
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
 #scoringButtons{
     display: flex;
     justify-content: space-evenly;
@@ -79,7 +75,7 @@ body{
     gap: 10px;
     padding-top: 10px;
 }
-.runBtn, #wicketBtn, #wideBtn{
+.runBtn, #wicketBtn, #wideBtn, #noBallBtn{
     color: hsl(190, 92%, 60%);
     font-size: 1.2rem;
     width: 90px;
@@ -90,7 +86,7 @@ body{
     border-radius: 8px;
     cursor: pointer;
 }
-.runBtn:hover, #wicketBtn:hover, #wideBtn:hover{
+.runBtn:hover, #wicketBtn:hover, #wideBtn:hover, #noBallBtn:hover{
     width: 110px;
     background-color: hsl(190, 92%, 60%);
     color: #6272a4;
@@ -114,4 +110,8 @@ body{
     background: linear-gradient(135deg, hsl(240, 60%, 20%), hsl(10, 80%, 65%));
     color: hsl(190, 100%, 70%);
     transform: scale(1.1);
+}
+@keyframes pulse{
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
