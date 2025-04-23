@@ -111,6 +111,15 @@ body{
     color: hsl(190, 100%, 70%);
     transform: scale(1.1);
 }
+#extraDisplay{
+    animation: pulse 3s infinite ease-in-out;
+    color: #E85D75;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 2rem;
+}
 @keyframes pulse{
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
