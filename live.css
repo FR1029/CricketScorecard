@@ -75,7 +75,7 @@ body{
     gap: 10px;
     padding-top: 10px;
 }
-.runBtn, #wicketBtn, #wideBtn, #noBallBtn{
+.runBtn, #wicketBtn, #wideBtn, #noBallBtn, #runoutBtn{
     color: hsl(190, 92%, 60%);
     font-size: 1.2rem;
     width: 90px;
@@ -86,7 +86,7 @@ body{
     border-radius: 8px;
     cursor: pointer;
 }
-.runBtn:hover, #wicketBtn:hover, #wideBtn:hover, #noBallBtn:hover{
+.runBtn:hover, #wicketBtn:hover, #wideBtn:hover, #noBallBtn:hover, #runoutBtn:hover{
     width: 110px;
     background-color: hsl(190, 92%, 60%);
     color: #6272a4;
@@ -119,6 +119,15 @@ body{
     padding-bottom: 0px;
     margin-bottom: 0px;
     font-size: 2rem;
+}
+#runoutRuns{
+    width: 40px;
+    margin-right: 0px;
+    text-align: center;
+    font-size: 1.4rem;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: 1px 1px 2px black;
 }
 @keyframes pulse{
     0%, 100% { transform: scale(1); }

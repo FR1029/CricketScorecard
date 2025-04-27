@@ -30,6 +30,7 @@ function setupPage(){
             noBalls: 0,
             isFreehit: false,
             isNoBall: false,
+            isRunout: false,
             // Current team scores and wickets
             score: 0,
             wickets: 0,
@@ -107,6 +108,9 @@ function livePage(){
         updateLive(matchData);// Live match update
         window.location.href = 'scorecard.html';
     });
+    document.getElementById('runoutBtn').addEventListener('click', function(){
+        recordRunout(matchData);
+    });
     if (matchData.balls === 12 && matchData.innings === 2) {
         updateLive(matchData);// Live match update
         window.location.href = 'summary.html';
@@ -116,10 +120,13 @@ function livePage(){
     function recordRun(matchData, runs) {
         matchData.score += runs;
         matchData.currentBatter.runs += runs;
-        matchData.currentBatter.balls++;
-        if (runs === 4) matchData.currentBatter.fours++;
-        if (runs === 6) matchData.currentBatter.sixes++;
         matchData.currentBowler.runs += runs;
+        matchData.currentBatter.balls++;
+        if(!matchData.isRunout){
+            matchData.currentBatter.balls++;
+            if (runs === 4) matchData.currentBatter.fours++;
+            if (runs === 6) matchData.currentBatter.sixes++;
+        }
         if (runs % 2 === 1) {
             [matchData.striker, matchData.nonstriker] = [matchData.nonstriker, matchData.striker];
             [matchData.currentBatter, matchData.nonStrikeBatter] = [matchData.nonStrikeBatter, matchData.currentBatter];
@@ -133,7 +140,7 @@ function livePage(){
             document.getElementById('noBallBtn').style.display = 'block';
             matchData.isFreehit = true;
         }
-        if(!matchData.isNoBall) {
+        if(!(matchData.isNoBall || matchData.isRunout)) {
             matchData.balls++;
             matchData.currentBowler.balls++;
             checkOver(matchData);// If over is completed then over completion logic run
@@ -141,13 +148,16 @@ function livePage(){
         }
         if(!matchData.isNoBall || !matchData.isNoBall) document.getElementById('extraDisplay').style.display = 'none';
         matchData.isNoBall = false;
+        matchData.isRunout = false;
         localStorage.setItem('matchData', JSON.stringify(matchData));// Match data is updated
         updateLive(matchData);// Live match update
     }
     // Record wickets
     function recordWicket(matchData) {
         matchData.wickets++;
-        matchData.currentBatter.balls++;
+        if(!matchData.isRunout){
+            matchData.currentBatter.balls++;
+        }
         matchData.currentBowler.wickets++;
         matchData.currentBowler.balls++;
         matchData.balls++;
@@ -157,15 +167,51 @@ function livePage(){
             matchData.battingScorecard1[matchData.striker].balls++, matchData.battingScorecard1[matchData.striker].status = 'out')
             : (matchData.bowlingScorecard2[matchData.overs].balls++,matchData.bowlingScorecard2[matchData.overs].wickets++,
             matchData.battingScorecard2[matchData.striker].balls++, matchData.battingScorecard2[matchData.striker].status = 'out');
+        if(matchData.wickets == 10){
+            if(matchData.innings == 1){
+                matchData.innings++;
+                // Store first inning data
+                matchData.balls1 = matchData.balls;
+                matchData.score1 = matchData.score;
+                matchData.wickets1 = matchData.wickets;
+                matchData.extras1 = matchData.extras;
+                matchData.wides1 = matchData.wides;
+                matchData.noBalls1 = matchData.noBalls;
+                // Reset current inning data
+                matchData.score = 0;
+                matchData.balls = 0;
+                matchData.overs = 0;
+                matchData.wickets = 0;
+                matchData.striker = 0;
+                matchData.nonstriker = 1;
+                matchData.extras = 0;
+                matchData.wides = 0;
+                matchData.noBalls = 0;
+                // Change Batting and Bowling team
+                [matchData.battingTeam, matchData.bowlingTeam] = [matchData.bowlingTeam, matchData.battingTeam];
+                // Take new data for next inning
+                matchData.currentBatter = { name: '', runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
+                matchData.nonStrikeBatter = { name: '', runs: 0, balls: 0, fours: 0, sixes: 0 };
+                matchData.currentBowler = { name: '', balls: 0, runs: 0, wickets: 0, noBalls: 0, wides: 0 };
+                while(!matchData.currentBatter.name) matchData.currentBatter.name = prompt("Second Innings: Enter new striker's name:");
+                while(!matchData.nonStrikeBatter.name) matchData.nonStrikeBatter.name = prompt("Second Innings: Enter non-striker's name:");
+                while(!matchData.currentBowler.name) matchData.currentBowler.name = prompt("Second Innings: Enter bowler name:");
+            }
+            else {
+                window.location.href = 'summary.html';
+            }
+        }
         // New batter logic
-        let newBatterName = '';
-        while(!newBatterName) newBatterName = prompt("Wicket! Enter new batter name:")
-        matchData.striker = matchData.wickets+1;
-        matchData.currentBatter = { name: newBatterName, runs: 0, balls: 0, fours: 0, sixes: 0 };
-        matchData.innings === 1 ? 
-            matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 }
-            : matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
-        checkOver(matchData);// If over is completed then over completion logic run
+        else{
+            let newBatterName = '';
+            while(!newBatterName) newBatterName = prompt("Wicket! Enter new batter name:")
+            matchData.striker = matchData.wickets+1;
+            matchData.currentBatter = { name: newBatterName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+            matchData.innings === 1 ? 
+                matchData.battingScorecard1[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 }
+                : matchData.battingScorecard2[matchData.striker] = { name: matchData.currentBatter.name, runs: 0, status: 'not out', balls: 0, fours: 0, sixes: 0 };
+            checkOver(matchData);// If over is completed then over completion logic run
+        }
         localStorage.setItem('matchData', JSON.stringify(matchData)); // Match data updated
         updateLive(matchData);// Live match update
     }
@@ -245,7 +291,19 @@ function livePage(){
         document.getElementById('noBallBtn').style.display = 'none';
         localStorage.setItem('matchData', JSON.stringify(matchData));
     }
+    function recordRunout(matchData){
+        runs=parseInt(document.getElementById('runoutRuns').value);
+        matchData.isRunout = true;
+        localStorage.setItem('matchData', JSON.stringify(matchData));
+        recordRun(matchData, runs);
+        recordWicket(matchData);
+        matchData.isRunout = false;
+        localStorage.setItem('matchData', JSON.stringify(matchData));
+    }
     function updateLive(matchData) {
+        document.getElementById('runoutBtn').addEventListener('click', function() {
+            console.log(document.getElementById('runoutRuns').value);
+        });
         // Scorecard update
         matchData.innings === 1 ? 
             (matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets, noBalls: matchData.currentBowler.noBalls, wides: matchData.currentBowler.wides},
@@ -261,7 +319,7 @@ function livePage(){
         }
         else{
             let NRR = (((matchData.score1+1-matchData.score)*6)/(12-matchData.balls)).toFixed(2);
-            if(NRR <= 0 || (matchData.innings === 2 && matchData.overs === 2)){
+            if(NRR <= 0 || (matchData.innings === 2 && (matchData.overs === 2 || matchData.wickets === 10))){
                 window.location.href = 'summary.html';
             }
             document.getElementById('overallScore').innerText = `${matchData.battingTeam} ${matchData.score}/${matchData.wickets} (${matchData.overs}.${matchData.balls % 6}) vs. ${matchData.bowlingTeam} ${matchData.score1}/${matchData.wickets1}`;
@@ -381,7 +439,7 @@ function scorecardPage() {
         document.getElementById('score1').innerHTML = `${matchData.score}/${matchData.wickets}`,
         document.getElementById('extras1').innerHTML = `(nb: ${matchData.noBalls}, w: ${matchData.wides})`,
         document.getElementById('extraRuns1').innerText = matchData.noBalls+matchData.wides )
-        : (document.getElementById('overs1').innerHTML = `${matchData.balls1/6}.0 Ov (RR: ${((matchData.score1*6)/matchData.balls1).toFixed(2)})`,
+        : (document.getElementById('overs1').innerHTML = `${Math.floor(matchData.balls1/6)}.${matchData.balls1%6} Ov (RR: ${((matchData.score1*6)/matchData.balls1).toFixed(2)})`,
         document.getElementById('overs2').innerHTML = `${Math.floor(matchData.balls/6)}.${matchData.balls%6} Ov (RR: ${CRR})`,
         document.getElementById('score1').innerHTML = `${matchData.score1}/${matchData.wickets1}`,
         document.getElementById('score2').innerHTML = `${matchData.score}/${matchData.wickets}`,
