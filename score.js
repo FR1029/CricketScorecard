@@ -28,9 +28,10 @@ function setupPage(){
             extras: 0,
             wides: 0,
             noBalls: 0,
+            byes: 0,
             isFreehit: false,
             isNoBall: false,
-            isRunout: false,
+            isBye: false,
             // Current team scores and wickets
             score: 0,
             wickets: 0,
@@ -102,15 +103,18 @@ function livePage(){
     document.getElementById('wideBtn').addEventListener('click', function() {
         recordWide(matchData);// Record wide
     });
-    document.getElementById('noBallBtn').addEventListener('click', function(){
+    document.getElementById('noBallBtn').addEventListener('click', function() {
         recordNoBall(matchData);// Record no ball
     });
-    document.getElementById('scorecardBtn').addEventListener('click', function(){
+    document.getElementById('scorecardBtn').addEventListener('click', function() {
         updateLive(matchData);// Live match update
         window.location.href = 'scorecard.html';
     });
-    document.getElementById('runoutBtn').addEventListener('click', function(){
+    document.getElementById('runoutBtn').addEventListener('click', function() {
         recordRunout(matchData);
+    });
+    document.getElementById('byeBtn').addEventListener('click', function() {
+        recordBye(matchData);
     });
     if (matchData.balls === 12 && matchData.innings === 2) {
         updateLive(matchData);// Live match update
@@ -118,12 +122,17 @@ function livePage(){
     }
     // Updates the match after scoring runs
     function recordRun(matchData, runs) {
-        matchData.score += runs;
-        matchData.currentBatter.runs += runs;
-        matchData.currentBowler.runs += runs;
-        matchData.currentBatter.balls++;
-        if (runs === 4) matchData.currentBatter.fours++;
-        if (runs === 6) matchData.currentBatter.sixes++;
+        if(matchData.isBye) {
+            matchData.score += runs;
+        }
+        else {
+            matchData.score += runs;
+            matchData.currentBatter.runs += runs;
+            matchData.currentBowler.runs += runs;
+            matchData.currentBatter.balls++;
+            if (runs === 4) matchData.currentBatter.fours++;
+            if (runs === 6) matchData.currentBatter.sixes++;
+        }
         if(runs % 2 === 1){
             [matchData.striker, matchData.nonstriker] = [matchData.nonstriker, matchData.striker];
             [matchData.currentBatter, matchData.nonStrikeBatter] = [matchData.nonStrikeBatter, matchData.currentBatter];
@@ -131,14 +140,20 @@ function livePage(){
         if(matchData.isFreehit){
             matchData.isFreehit = false;
         }
-        matchData.isNoBall ?
-            (document.getElementById('extraDisplay').style.display = 'block',
-            document.getElementById('extraDisplay').innerText = "It's a Free hit!",
-            document.getElementById('noBallBtn').style.display = 'block', 
-            matchData.isFreehit = true)
-            : (matchData.balls++,
-            matchData.currentBowler.balls++,
-            checkOver(matchData));
+        if(matchData.isNoBall){
+            document.getElementById('extraDisplay').style.display = 'block';
+            document.getElementById('extraDisplay').innerText = "It's a Free hit!";
+            document.getElementById('noBallBtn').style.display = 'block';
+            matchData.isFreehit = true;
+        }
+        else if (matchData.isBye){
+            d
+        }
+        else {
+            matchData.balls++;
+            matchData.currentBowler.balls++;
+            checkOver(matchData);
+        }
         if(!matchData.isNoBall && !matchData.isFreehit) document.getElementById('extraDisplay').style.display = 'none';
         matchData.isNoBall = false;
         localStorage.setItem('matchData', JSON.stringify(matchData));// Match data is updated
@@ -282,7 +297,7 @@ function livePage(){
         localStorage.setItem('matchData', JSON.stringify(matchData));
     }
     function recordRunout(matchData){
-        runs=parseInt(document.getElementById('runoutRuns').value);
+        runs=parseInt(document.getElementById('extraRuns').value);
         matchData.score += runs;
         matchData.balls++;
         matchData.currentBatter.runs += runs;
@@ -345,10 +360,16 @@ function livePage(){
         localStorage.setItem('matchData', JSON.stringify(matchData));
         updateLive(matchData);
     }
+    function recordBye(matchData){
+        matchData.isBye = true;
+        document.getElementById('extraDisplay').style.display = 'block';
+        document.getElementById('extraDisplay').innerText = "It's a bye";
+        document.getElementById('byeBtn').style.display = 'none';
+        document.getElementById('wideBtn').style.display = 'none';
+        document.getElementById('noballBtn').style.display = 'none';
+        localStorage.setItem('matchData', JSON.stringify(matchData));
+    }
     function updateLive(matchData) {
-        document.getElementById('runoutBtn').addEventListener('click', function() {
-            console.log(document.getElementById('runoutRuns').value);
-        });
         // Scorecard update
         matchData.innings === 1 ? 
             (matchData.bowlingScorecard1[matchData.overs] = { name: matchData.currentBowler.name, balls: matchData.currentBowler.balls, runs: matchData.currentBowler.runs, wickets: matchData.currentBowler.wickets, noBalls: matchData.currentBowler.noBalls, wides: matchData.currentBowler.wides},

@@ -73,19 +73,24 @@
                 </tbody>
             </table>
         </div>
-        <div id="scoringButtons">
+        <div id="runBtns">
             <button class="runBtn" data-run="0">0</button>
             <button class="runBtn" data-run="1">1</button>
             <button class="runBtn" data-run="2">2</button>
             <button class="runBtn" data-run="3">3</button>
             <button class="runBtn" data-run="4">4</button>
             <button class="runBtn" data-run="6">6</button>
-            <button id="wicketBtn">Wicket</button>
-            <input type="number" id="runoutRuns" min="0" max="6" onkeydown="return false" value="0">
-            <button id="runoutBtn">Runout</button>
-            <button id="wideBtn">Wide</button>
-            <button id="noBallBtn">No Ball</button>
-            
+        </div>
+        <div id="extraBtns">
+            <button class="extraBtn" id="wicketBtn">Wicket</button>
+            <button class="extraBtn" id="runoutBtn">Runout</button>
+            <button class="extraBtn" id="wideBtn">Wide</button>
+            <button class="extraBtn" id="noBallBtn">No Ball</button>
+            <button class="extraBtn" id="byeBtn">Bye</button>
+            <button class="extraBtn" id="legByeBtn">Leg Bye</button>
+        </div>
+        <div>
+            <input type="number" id="extraRuns" min="0" max="6" onkeydown="return false" value="0">
         </div>
         <div id="extraDisplay" style="display: none; text-align: center;"></div>
         <div id="navigation" style="text-align: center;">
