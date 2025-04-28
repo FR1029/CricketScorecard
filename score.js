@@ -16,61 +16,35 @@ function setupPage(){
         let matchData = {
             team1: team1,
             team2: team2,
-            // Decide who bats first based on toss winner and decision
             battingTeam: tossDecision === 'bat'
                 ? (tossWinner === 'team1' ? team1 : team2)
                 : (tossWinner === 'team1' ? team2 : team1),
             bowlingTeam: tossDecision === 'bowl'
                 ? (tossWinner === 'team1' ? team1 : team2)
                 : (tossWinner === 'team1' ? team2 : team1),
-            overs: 0,
             innings: 1,
-            extras: 0,
+            score: 0,
+            balls: 0,
+            wickets: 0,
+            overs: 0,
+            striker: 0,
+            nonstriker: 1,
             wides: 0,
             noBalls: 0,
             byes: 0,
             isFreehit: false,
             isNoBall: false,
             isBye: false,
-            // Current team scores and wickets
-            score: 0,
-            wickets: 0,
-            balls: 0,
-            striker: 0,
-            nonstriker: 1,
             // First-innings score snapshot
             score1: 0,
-            wickets1: 0,
             balls1: 0,
-            extras1: 0,
+            wickets1: 0,
             wides1: 0,
             noBalls1: 0,
-            // Current player's stats
-            currentBatter: {
-                name: '',
-                status: 'not out',
-                runs: 0,
-                balls: 0,
-                fours: 0,
-                sixes: 0
-            },
-            nonStrikeBatter: {
-                name: '',
-                status: 'not out',
-                runs: 0,
-                balls: 0,
-                fours: 0,
-                sixes: 0
-            },
-            currentBowler: {
-                name: '',
-                balls: 0,
-                runs: 0,
-                wickets: 0,
-                noBalls: 0,
-                wides: 0
-            },
-            // Scorecards for both innings
+            byes1: 0,
+            currentBatter: { name: '', status: 'not out', runs: 0, balls: 0, fours: 0, sixes: 0 },
+            nonStrikeBatter: { name: '', status: 'not out', runs: 0, balls: 0, fours: 0, sixes: 0 },
+            currentBowler: { name: '', balls: 0, runs: 0, wickets: 0, noBalls: 0, wides: 0 },
             battingScorecard1: {}, 
             battingScorecard2: {},
             bowlingScorecard1: {},
@@ -179,7 +153,6 @@ function livePage(){
                 matchData.balls1 = matchData.balls;
                 matchData.score1 = matchData.score;
                 matchData.wickets1 = matchData.wickets;
-                matchData.extras1 = matchData.extras;
                 matchData.wides1 = matchData.wides;
                 matchData.noBalls1 = matchData.noBalls;
                 // Reset current inning data
@@ -189,7 +162,6 @@ function livePage(){
                 matchData.wickets = 0;
                 matchData.striker = 0;
                 matchData.nonstriker = 1;
-                matchData.extras = 0;
                 matchData.wides = 0;
                 matchData.noBalls = 0;
                 // Change Batting and Bowling team
@@ -248,7 +220,6 @@ function livePage(){
                 matchData.balls1 = matchData.balls;
                 matchData.score1 = matchData.score;
                 matchData.wickets1 = matchData.wickets;
-                matchData.extras1 = matchData.extras;
                 matchData.wides1 = matchData.wides;
                 matchData.noBalls1 = matchData.noBalls;
                 // Reset current inning data
@@ -258,7 +229,6 @@ function livePage(){
                 matchData.wickets = 0;
                 matchData.striker = 0;
                 matchData.nonstriker = 1;
-                matchData.extras = 0;
                 matchData.wides = 0;
                 matchData.noBalls = 0;
                 // Change Batting and Bowling team
@@ -274,7 +244,6 @@ function livePage(){
         }
     }
     function recordWide(matchData){
-        matchData.extras++;
         matchData.wides++;
         matchData.score++;
         matchData.currentBowler.runs++;
@@ -330,7 +299,6 @@ function livePage(){
                 matchData.balls1 = matchData.balls;
                 matchData.score1 = matchData.score;
                 matchData.wickets1 = matchData.wickets;
-                matchData.extras1 = matchData.extras;
                 matchData.wides1 = matchData.wides;
                 matchData.noBalls1 = matchData.noBalls;
                 // Reset current inning data
@@ -340,7 +308,6 @@ function livePage(){
                 matchData.wickets = 0;
                 matchData.striker = 0;
                 matchData.nonstriker = 1;
-                matchData.extras = 0;
                 matchData.wides = 0;
                 matchData.noBalls = 0;
                 // Change Batting and Bowling team

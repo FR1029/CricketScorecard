@@ -1,27 +1,9 @@
-*{
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-body{
-    margin: 0;
-    font-family: Klavika, Helvetica, sans-serif;
-    font-size: 1.2rem;
-    background-color: hsl(146, 79%, 69%);
-}
-#liveBtn{
-    max-width: 1000px;
-    margin: 0px 0px 40px 40px;
-    padding: 10px 20px;
-    text-align: center;
-}
 .container{
     max-width: 1000px;
     margin: 40px auto;
     margin-top: 0px;
     padding: 30px 20px;
     border-radius: 20px;
-    background: linear-gradient(145deg, hsl(190, 92%, 60%), hsl(146, 79%, 69%));
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     font-size: 1.5rem;
 }
@@ -31,27 +13,6 @@ body{
     text-align: left;
     margin-top: 0px;
     margin-bottom: 10px;
-}
-table{
-    table-layout: fixed;
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    font-size: 1.2rem;
-}
-th, td{
-    padding: 12px;
-    border: 1px solid hsl(238, 81%, 55%);
-    text-align: center;
-    word-wrap: break-word;
-}
-thead, tfoot{
-    background-color: rgba(98, 114, 164, 0.15);
-    color: #6272a4;
-    font-weight: bold;
-}
-tbody{
-    color: hsl(0, 6%, 54%);
 }
 button{
     font-size: 1.5rem;
