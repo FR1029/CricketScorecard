@@ -68,3 +68,10 @@ button:hover{
     color: hsl(190, 100%, 70%);
     transform: scale(1.05);
 }
+#liveBtn{
+    text-align: center;
+    margin: 40px auto;
+    margin-top: 0px;
+    padding: 30px 20px;
+    padding-bottom: 0px;
+}
