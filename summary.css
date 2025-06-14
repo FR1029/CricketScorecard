@@ -2,8 +2,8 @@
     width: fit-content;
 }
 #matchResult {
-    font-size: 1.5rem;
-    color: #333;
+    font-size: 2rem;
+    color: #6272a4;
     margin: 20px 0;
     animation: pulse 3s infinite ease-in-out;
 }
